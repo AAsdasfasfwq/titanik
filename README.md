@@ -55,7 +55,7 @@ What it does:
 1. starts a local static server, opens `index.html?render=1` in headless Chrome;
 2. renders the whole sound design offline (`OfflineAudioContext`) to `out/parts/sfx.wav`;
 3. for every frame calls `window.__T.frame(t)` (fully deterministic — time is the only input) and
-   pipes the JPEG frames into ffmpeg (libx264, CRF 18, yuv420p);
+   pipes the JPEG frames into ffmpeg (libx264, CRF 20, yuv420p; `--crf 18` for higher quality);
 4. concatenates the parts and mixes `assets/voiceover.mp3` + SFX (with a limiter) into `out/titanic.mp4`.
 
 The render log prints the WebGL renderer: with a GPU it should not say "SwiftShader". On a machine

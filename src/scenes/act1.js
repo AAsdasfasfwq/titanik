@@ -21,7 +21,7 @@ function rollingYear(g, year, x, y, p, o = {}) {
   digits.forEach((d, i) => {
     const k = easeOut(clamp(p * 1.6 - i * 0.18));
     const from = (o.from ?? 2026).toString()[i] ?? '0';
-    const steps = ((+d - +from + 10) % 10) + 10 * (digits.length - i);
+    const steps = ((+d - +from + 10) % 10) + 10 * i;
     const pos = steps * k;
     for (let s = Math.floor(pos) - 1; s <= Math.floor(pos) + 1; s++) {
       const val = (((+from + s) % 10) + 10) % 10;

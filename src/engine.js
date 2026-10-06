@@ -48,7 +48,7 @@ const FinalShader = {
 };
 
 export const DEFAULT_FX = () => ({
-  bloom: 0.55, bloomRadius: 0.45, bloomThreshold: 0.82, exposure: 1.0, vignette: 0.5, grain: 0.045, aberration: 0.0016,
+  bloom: 0.55, bloomRadius: 0.45, bloomThreshold: 0.82, exposure: 1.0, vignette: 0.5, grain: 0.022, aberration: 0.0016,
   saturation: 1.12, contrast: 1.06, tint: [1, 1, 1], lift: [0, 0, 0], fade: 0, flash: 0, zoomBlur: 0, letterbox: 0, flicker: 0, mono: 0,
   captions: true, captionStyle: 'default',
 });
@@ -93,7 +93,10 @@ export class Engine {
   /** absolute time of word wi inside segment id (negative index counts from end) */
   WT(id, wi) { const w = this.segs[id].words; const k = wi < 0 ? w.length + wi : wi; return w[Math.max(0, Math.min(w.length - 1, k))].start; }
   /** time of the first word matching regex in segment id */
-  find(id, re) { const w = this.segs[id].words.find((x) => re.test(x.word)); return w ? w.start : this.segs[id].start; }
+  find(id, re) {
+    if (!this._merged) this._merged = this.segs.map((sg) => sg.words.reduce((acc, w) => { if (!w.word.startsWith(' ') && acc.length) acc[acc.length - 1].word += w.word.trim(); else acc.push({ word: w.word.trim(), start: w.start }); return acc; }, []));
+    const w = this._merged[id].find((x) => re.test(x.word)); return w ? w.start : this.segs[id].start;
+  }
 
   compile(defs) {
     const LEAD = 0.12;
@@ -165,7 +168,7 @@ export class Engine {
     this.renderer.toneMappingExposure = fx.exposure;
     this.bloom.strength = fx.bloom * 0.75; this.bloom.radius = fx.bloomRadius; this.bloom.threshold = Math.max(0.95, fx.bloomThreshold + 0.45);
     const u = this.final.uniforms;
-    u.time.value = t; u.vignette.value = fx.vignette; u.grain.value = fx.grain; u.aberration.value = fx.aberration; u.fade.value = fx.fade; u.flash.value = fx.flash;
+    u.time.value = t; u.vignette.value = fx.vignette; u.grain.value = Math.min(fx.grain, 0.05) * 0.5; u.aberration.value = fx.aberration; u.fade.value = fx.fade; u.flash.value = fx.flash;
     u.zoomBlur.value = fx.zoomBlur; u.saturation.value = fx.saturation; u.contrast.value = fx.contrast; u.tint.value.set(...fx.tint); u.lift.value.set(...fx.lift);
     u.letterbox.value = fx.letterbox; u.flicker.value = fx.flicker; u.mono.value = fx.mono;
     this.composer.render();

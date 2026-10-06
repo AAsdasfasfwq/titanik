@@ -97,7 +97,7 @@ S3.push({
 S3.push({
   seg: 81, name: 'near miss new york', amb: ['ocean', { kind: 'crowd', vol: 0.5 }], trans: 'whip',
   fx: { bloom: 0.5, saturation: 1.15, contrast: 1.08 },
-  sfx: (S) => [{ t: 0, type: 'whoosh', vol: 0.25 }, { t: S.find(82, /pulls/), type: 'creak', dur: 3, vol: 0.2 }, { t: S.find(82, /moorings/) - 0.4, type: 'gunshot', vol: 0.2 }, { t: S.find(82, /moorings/) - 0.1, type: 'gunshot', vol: 0.15 }, { t: S.find(84, /narrowly/), type: 'riser', dur: 2, vol: 0.18 }, { t: S.find(84, /three/), type: 'hit', vol: 0.45 }, { t: S.find(84, /three/), type: 'horn', dur: 1.4, vol: 0.12 }],
+  sfx: (S) => [{ t: 0, type: 'whoosh', vol: 0.25 }, { t: S.find(82, /pulls/), type: 'creak', dur: 3, vol: 0.2 }, { t: S.find(83, /moorings/) - 0.4, type: 'gunshot', vol: 0.2 }, { t: S.find(83, /moorings/) - 0.1, type: 'gunshot', vol: 0.15 }, { t: S.find(84, /narrowly/), type: 'riser', dur: 2, vol: 0.18 }, { t: S.find(84, /three/), type: 'hit', vol: 0.45 }, { t: S.find(84, /three/), type: 'horn', dur: 1.4, vol: 0.12 }],
   build(E) {
     const st = dockWorld(E);
     st.ny = buildLiner({ spec: NEWYORK }); st.scene.add(st.ny);

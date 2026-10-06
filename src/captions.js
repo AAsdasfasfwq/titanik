@@ -10,6 +10,8 @@ export function buildCaptions(script) {
   segs.forEach((s, i) => {
     if (i === segs.length - 1 && i > 0 && segs[i - 1].text.toLowerCase().includes(s.text.trim().toLowerCase())) return; // whisper duplicate at the very end
     for (const w of s.words) {
+      // tokens without a leading space continue the previous word ("30" + ",000", "first" + "-class")
+      if (!w.word.startsWith(' ') && words.length) { const prev = words[words.length - 1]; prev.text = FIX[prev.text + w.word.trim()] ?? prev.text + w.word.trim(); prev.end = w.end; continue; }
       let text = w.word.trim(); text = FIX[text] ?? text;
       words.push({ text, start: w.start, end: w.end });
     }

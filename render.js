@@ -22,7 +22,7 @@ const arg = (name, def) => { const i = argv.indexOf(`--${name}`); return i >= 0 
 const FPS = +arg('fps', 30);
 const WORKERS = Math.max(1, +arg('workers', 1));
 const OUT = path.resolve(arg('out', path.join(ROOT, 'out', 'titanic.mp4')));
-const CRF = arg('crf', '18');
+const CRF = arg('crf', '20');
 const PRESET = arg('preset', 'medium');
 const SFX_LEVEL = +arg('sfx', 0.32);
 const JPEG_Q = +arg('jpeg', 0.92);
