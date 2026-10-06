@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Titanic — Countdown to Disaster</title>
+<style>
+  @font-face { font-family: Oswald; font-weight: 400; src: url(node_modules/@fontsource/oswald/files/oswald-latin-400-normal.woff2) format('woff2'); }
+  @font-face { font-family: Oswald; font-weight: 500; src: url(node_modules/@fontsource/oswald/files/oswald-latin-500-normal.woff2) format('woff2'); }
+  @font-face { font-family: Oswald; font-weight: 700; src: url(node_modules/@fontsource/oswald/files/oswald-latin-700-normal.woff2) format('woff2'); }
+  @font-face { font-family: Oswald; font-weight: 300; src: url(node_modules/@fontsource/oswald/files/oswald-latin-300-normal.woff2) format('woff2'); }
+  @font-face { font-family: Inter; font-weight: 400; src: url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2) format('woff2'); }
+  @font-face { font-family: Inter; font-weight: 600; src: url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2) format('woff2'); }
+  @font-face { font-family: Inter; font-weight: 800; src: url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2) format('woff2'); }
+  @font-face { font-family: Inter; font-weight: 900; src: url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Playfair Display"; font-style: italic; font-weight: 500; src: url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-500-italic.woff2) format('woff2'); }
+  @font-face { font-family: "Playfair Display"; font-style: italic; font-weight: 800; src: url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-800-italic.woff2) format('woff2'); }
+  @font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 800; src: url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-800-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 500; src: url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-500-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Bebas Neue"; font-weight: 400; src: url(node_modules/@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Special Elite"; font-weight: 400; src: url(node_modules/@fontsource/special-elite/files/special-elite-latin-400-normal.woff2) format('woff2'); }
+  html, body { margin: 0; height: 100%; background: #050507; color: #ddd; font: 14px Inter, system-ui, sans-serif; overflow: hidden; }
+  #stage { position: absolute; inset: 0 0 64px 0; display: flex; align-items: center; justify-content: center; }
+  canvas#c { max-width: 100%; max-height: 100%; aspect-ratio: 16/9; background: #000; box-shadow: 0 0 60px #000; }
+  #bar { position: absolute; left: 0; right: 0; bottom: 0; height: 64px; display: flex; gap: 12px; align-items: center; padding: 0 16px; background: #0c0c10; border-top: 1px solid #222; }
+  #bar button { background: #c8102e; color: #fff; border: 0; border-radius: 6px; padding: 8px 14px; font-weight: 700; cursor: pointer; }
+  #seek { flex: 1; accent-color: #c8102e; }
+  #time { font-variant-numeric: tabular-nums; min-width: 140px; }
+  #scene { min-width: 220px; color: #9aa; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  label { display: flex; gap: 6px; align-items: center; color: #aaa; }
+  body.render #bar { display: none; } body.render #stage { inset: 0; } body.render canvas#c { max-width: none; max-height: none; width: 1920px; height: 1080px; box-shadow: none; }
+  #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 700 22px Oswald, sans-serif; letter-spacing: 4px; color: #888; pointer-events: none; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1920" height="1080"></canvas><div id="loading">LOADING…</div></div>
+<div id="bar">
+  <button id="play">▶ Play</button>
+  <span id="time">0:00.0 / 0:00</span>
+  <input id="seek" type="range" min="0" max="1000" step="0.1" value="0">
+  <span id="scene"></span>
+  <label><input id="cap" type="checkbox" checked> captions</label>
+  <label>sfx <input id="vol" type="range" min="0" max="1" step="0.01" value="0.35"></label>
+</div>
+<audio id="vo" src="assets/voiceover.mp3" preload="auto"></audio>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

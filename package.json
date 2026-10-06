@@ -1,0 +1,21 @@
+{
+  "name": "titanic-documentary",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "render": "node render.js"
+  },
+  "dependencies": {
+    "@fontsource/bebas-neue": "^5.0.0",
+    "@fontsource/inter": "^5.0.0",
+    "@fontsource/oswald": "^5.0.0",
+    "@fontsource/playfair-display": "^5.0.0",
+    "@fontsource/special-elite": "^5.0.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "puppeteer": "^23.0.0"
+  }
+}
