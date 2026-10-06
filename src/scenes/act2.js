@@ -178,8 +178,9 @@ S2.push({
   },
   update(st, S) {
     const a40 = S.at(40);
+    st.scaf.visible = S.lt < a40;
     if (S.lt < a40) track(st.camera, [[0, [-70, 1.7, 62], [-20, 30, 0], 50], [a40, [-60, 1.7, 58], [-10, 38, 0], 48]], S.lt);
-    else track(st.camera, [[a40, [60, 4, 26], [60, 6, 14], 30], [S.dur, [60, 4, 22], [60, 6, 14], 24]], S.lt);
+    else track(st.camera, [[a40, [40, 14, 32], [70, 16, 14], 40], [S.dur, [50, 15, 24], [70, 16, 14], 32]], S.lt);
     st.people.userData.update(S.t, (d, t, i) => ({ x: d.x + ((t * 1.2 + i * 3) % 30) - 15 }));
     st.tick(S);
   },
@@ -527,7 +528,7 @@ S2.push({
     const types = [{ coat: '#151a2a', hat: 'officer' }, { coat: '#f2efe6', pants: '#151515', tie: '#111' }, { coat: '#2a2a2a', hat: 'flat', tie: false, shirt: '#6a6a6a' }];
     for (let i = 0; i < 14; i++) { const p = person({ ...types[i % 3], skin: ['#e8b896', '#d9a27c', '#f0c8a8'][i % 3] }); p.position.set(40 - i * 1.3, by - 1.2, 10); scene.add(p); crew.push(p); }
     const smith = person({ coat: '#141a2c', hat: 'officer', beard: true, hair: '#d8d8d8', beardColor: '#eeeeee', skin: '#e8b8a0' });
-    smith.position.set(78, by + 2.1, 9); smith.rotation.y = Math.PI * 0.85; scene.add(smith);
+    smith.position.set(78, by + 2.1, 9); smith.rotation.y = -0.45; scene.add(smith);
     // gold cuffs
     Object.assign(st, { crew, smith });
     return st;

@@ -35,6 +35,12 @@ function hullTexture(S, lit) {
       for (let i = 0; i < 400; i++) { g.fillStyle = `rgba(0,0,0,${r() * 0.12})`; g.fillRect(r() * W, toPx(-0.3) + r() * 200, 30 + r() * 80, 2 + r() * 6); }
       g.fillStyle = S.boot; g.fillRect(0, toPx(0.25), W, toPx(-0.3) - toPx(0.25));
       g.fillStyle = S.line; g.fillRect(0, toPx(S.deck - 0.6), W, 3);
+      if (S.name) {
+        g.fillStyle = '#e8c46a'; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.font = '700 30px Oswald'; g.letterSpacing = '6px';
+        g.fillText(S.name, W * 0.915, toPx(S.deck - 2.2));
+        g.font = '700 22px Oswald'; g.fillText(S.name, W * 0.035, toPx(S.deck - 2.6)); g.font = '500 14px Oswald'; g.fillText('LIVERPOOL', W * 0.035, toPx(S.deck - 3.8));
+      }
     } else { g.fillStyle = '#000'; g.fillRect(0, 0, W, H); }
     const r2 = rng(21);
     for (const row of S.portholeRows) {

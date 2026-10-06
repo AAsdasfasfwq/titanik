@@ -72,7 +72,7 @@ S3.push({
       { x: 6, ps: [{ coat: '#101218', hair: '#1a1410', mustache: true }, { coat: '#1a1c24', hair: '#3a2a1e' }] },
     ];
     st.cast = [];
-    cast.forEach((c) => c.ps.forEach((o, i) => { const p = person(o); p.position.set(c.x + (i ? 0.55 : -0.35), 0, 0); p.rotation.y = i ? -0.2 : 0.15; scene.add(p); st.cast.push(p); const spot = new THREE.SpotLight(0xffe2b0, 25, 8, 0.45, 0.6, 1.5); spot.position.set(c.x, 4.6, 2); spot.target.position.set(c.x, 1.2, 0); scene.add(spot, spot.target); }));
+    cast.forEach((c) => c.ps.forEach((o, i) => { const p = person(o); p.position.set(c.x + (i ? 0.55 : -0.35), 0, 0); p.rotation.y = i ? -0.2 : 0.15; scene.add(p); st.cast.push(p); const spot = new THREE.SpotLight(0xffe2b0, 10, 8, 0.45, 0.6, 1.5); spot.position.set(c.x, 4.6, 2); spot.target.position.set(c.x, 1.2, 0); scene.add(spot, spot.target); }));
     for (let i = -3; i <= 3; i++) painting(scene, i * 2.8, 2.9, -4.95, 1.4, 1.0, landscape(['#3a5a8a', '#6a3a5a', '#3a6a5a'][(i + 3) % 3], '#d8a060'));
     return st;
   },

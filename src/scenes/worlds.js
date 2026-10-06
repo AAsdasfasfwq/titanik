@@ -157,7 +157,7 @@ export function underwaterWorld(o = {}, E) {
   const scene = new THREE.Scene();
   const col = new THREE.Color(o.color ?? '#03121c');
   scene.background = col; scene.fog = new THREE.FogExp2(col, o.density ?? 0.02);
-  scene.add(new THREE.HemisphereLight(0x2a5a7a, 0x020406, o.hemi ?? 0.5));
+  scene.add(new THREE.HemisphereLight(0x4a8ab0, 0x0a0806, o.hemi ?? 0.5));
   if (E?.envMap) { scene.environment = E.envMap; scene.environmentIntensity = 0.15; }
   const seabedTex = canvasTex(512, 512, (c, w, h) => { c.fillStyle = '#3a3428'; c.fillRect(0, 0, w, h); const r = rng(8); for (let i = 0; i < 3000; i++) { c.fillStyle = `rgba(${r() < 0.5 ? '0,0,0' : '200,190,160'},${r() * 0.15})`; c.beginPath(); c.arc(r() * w, r() * h, r() * 4, 0, 7); c.fill(); } }, { repeat: [40, 40] });
   const bedGeo = new THREE.PlaneGeometry(800, 800, 120, 120); bedGeo.rotateX(-Math.PI / 2);
@@ -175,7 +175,7 @@ export function underwaterWorld(o = {}, E) {
 /** rusticles-covered material */
 export function rustMat(o = {}) {
   const t = canvasTex(512, 512, (c, w, h) => {
-    c.fillStyle = o.base ?? '#5a2e18'; c.fillRect(0, 0, w, h); const r = rng(o.seed ?? 12);
+    c.fillStyle = o.base ?? '#9a5230'; c.fillRect(0, 0, w, h); const r = rng(o.seed ?? 12);
     for (let i = 0; i < 900; i++) { c.fillStyle = `rgba(${140 + r() * 80},${50 + r() * 50},${10 + r() * 20},${0.2 + r() * 0.4})`; const x = r() * w, y = r() * h; c.beginPath(); c.ellipse(x, y, 2 + r() * 8, 6 + r() * 30, 0, 0, 7); c.fill(); }
     for (let i = 0; i < 400; i++) { c.fillStyle = `rgba(20,10,5,${r() * 0.4})`; c.fillRect(r() * w, r() * h, 2 + r() * 6, 2 + r() * 6); }
   }, { repeat: o.repeat ?? [8, 2] });

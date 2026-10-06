@@ -110,8 +110,8 @@ export function crowsNest(E, o = {}) {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x02040a);
   scene.fog = new THREE.Fog(0x02040a, 30, 400);
-  scene.add(new THREE.HemisphereLight(0x3a4a7a, 0x05070a, 0.35));
-  const moon = new THREE.DirectionalLight(0x8aa0ff, 0.9); moon.position.set(-10, 20, -10); scene.add(moon);
+  scene.add(new THREE.HemisphereLight(0x5a6aa0, 0x05070a, 0.9));
+  const moon = new THREE.DirectionalLight(0x8aa0ff, 1.6); moon.position.set(-10, 20, -10); scene.add(moon);
   const faceL = new THREE.PointLight(0xaab8ff, 4, 6, 1.5); faceL.position.set(0.2, 2.1, -1.6); scene.add(faceL);
   const stars = particles(1500, (i) => { const q = rng(i + 4); const a = q() * Math.PI * 2, e = q() * 1.2 + 0.02; return [Math.cos(a) * Math.cos(e) * 300, Math.sin(e) * 300, Math.sin(a) * Math.cos(e) * 300]; }, { size: 1.6, color: 0xffffff, opacity: 0.9, atten: false, fog: false });
   scene.add(stars);
@@ -141,9 +141,9 @@ export function grandStaircase(E) {
     // cherub lamp
     const c = sph(0.2, iron, -2.6, 1.6, 3.4, scene); void c; const gl = glow(0xffd28a, 1.0, 1); gl.position.set(-2.6, 2.0, 3.4); scene.add(gl);
     // glass dome
-    const domeTex = canvasTex(1024, 512, (g, w, h) => { g.fillStyle = '#fff6dc'; g.fillRect(0, 0, w, h); g.strokeStyle = '#3a2a14'; g.lineWidth = 6; for (let x = 0; x < w; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); } for (let y = 0; y < h; y += 48) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); } g.fillStyle = 'rgba(160,200,255,0.4)'; for (let x = 0; x < w; x += 128) for (let y = 0; y < h; y += 96) g.fillRect(x + 6, y + 6, 52, 36); });
+    const domeTex = canvasTex(1024, 512, (g, w, h) => { g.fillStyle = '#c8b48a'; g.fillRect(0, 0, w, h); g.strokeStyle = '#3a2a14'; g.lineWidth = 6; for (let x = 0; x < w; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); } for (let y = 0; y < h; y += 48) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); } g.fillStyle = 'rgba(160,200,255,0.4)'; for (let x = 0; x < w; x += 128) for (let y = 0; y < h; y += 96) g.fillRect(x + 6, y + 6, 52, 36); });
     const dome = mesh(new THREE.SphereGeometry(4, 40, 20, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshBasicMaterial({ map: domeTex, side: THREE.BackSide, toneMapped: false }), 0, 8.9, 0, scene); void dome;
-    const L = new THREE.PointLight(0xfff2d0, 40, 20, 1.2); L.position.set(0, 8, 0); scene.add(L);
+    const L = new THREE.PointLight(0xfff2d0, 14, 20, 1.2); L.position.set(0, 8, 0); scene.add(L);
     chandelier(scene, 0, 7.5, 0, 1.6, { intensity: 15, dist: 16 });
     const p1 = person({ female: true, dress: '#7a1f3d', hair: '#3a2a1e' }); p1.position.set(-0.6, 2.4, -1.2); scene.add(p1);
     const p2 = person({ coat: '#111', hat: 'top' }); p2.position.set(0.2, 2.4, -1.2); scene.add(p2);

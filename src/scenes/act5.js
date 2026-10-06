@@ -30,7 +30,7 @@ S5.push(card(273, '1 HOUR', 'AFTER THE SINKING'));
 // 274 — 1,500 people in 28°F water
 S5.push({
   seg: 274, name: 'people in the water', amb: [{ kind: 'night', vol: 0.6 }, { kind: 'crowd', vol: 0.35 }], trans: 'fade',
-  fx: { bloom: 1.0, bloomThreshold: 0.45, saturation: 0.85, tint: [0.88, 0.97, 1.15], vignette: 0.85 },
+  fx: { exposure: 1.4, bloom: 1.0, bloomThreshold: 0.45, saturation: 0.85, tint: [0.88, 0.97, 1.15], vignette: 0.85 },
   sfx: (S) => [{ t: S.find(275, /1,500/), type: 'hit', vol: 0.4 }, { t: S.find(275, /28/), type: 'drop', vol: 0.3, f0: 400, f1: 80 }, { t: S.at(276), type: 'pop', pitch: 300 }],
   build(E) {
     const st = oceanWorld({ ...GLASS, envMap: E.envMap, ship: false, fogNear: 300, fogFar: 2500 });
@@ -78,7 +78,7 @@ S5.push(dark({
 // 280 — the sound of hundreds crying for help
 S5.push({
   seg: 280, name: 'cries in the dark', amb: [{ kind: 'night', vol: 0.5 }, { kind: 'crowd', vol: 0.55 }],
-  fx: { bloom: 1.0, bloomThreshold: 0.45, saturation: 0.8, tint: [0.88, 0.96, 1.15], vignette: 0.9 },
+  fx: { exposure: 1.4, bloom: 1.0, bloomThreshold: 0.45, saturation: 0.8, tint: [0.88, 0.96, 1.15], vignette: 0.9 },
   sfx: (S) => [{ t: 0.5, type: 'drop', vol: 0.15, f0: 220, f1: 110, dur: 4 }],
   build(E) {
     const st = oceanWorld({ ...GLASS, envMap: E.envMap, ship: false, fogNear: 200, fogFar: 2200 });
@@ -349,8 +349,11 @@ S5.push(paper({
       const t1 = lt - S.find(335, /tonnage/), t2 = lt - S.find(336, /people/);
       const tilt = t2 > 0 ? 0.0 : t1 > 0 ? -0.0 : 0;
       void tilt;
-      if (t1 > 0) { g.save(); g.globalAlpha = clamp(t1 * 3); card2(g, W / 2 - 420, 520, 'SHIP TONNAGE', '46,328 GRT', '#3a3a3a'); g.restore(); check(g, W / 2 - 420, 380, 60, PAL.green, clamp(t1 / 0.4)); }
-      if (t2 > 0) { g.save(); g.globalAlpha = clamp(t2 * 3); card2(g, W / 2 + 420, 520, 'PEOPLE ABOARD', '2,224', PAL.red); g.restore(); cross(g, W / 2 + 420, 380, 70, PAL.red, clamp(t2 / 0.4)); txt(g, 'not the number of people', W / 2, H - 200, { font: F.serif(52, true, 800), color: PAL.red, alpha: clamp(t2 * 2) }); }
+      g.save(); g.globalAlpha = clamp(k * 2) * (t1 > 0 ? 1 : 0.45); card2(g, W / 2 - 420, 520, 'SHIP TONNAGE', '46,328 GRT', '#3a3a3a'); g.restore();
+      g.save(); g.globalAlpha = clamp(k * 2 - 0.3) * (t2 > 0 ? 1 : 0.45); card2(g, W / 2 + 420, 520, 'PEOPLE ABOARD', '2,224', PAL.red); g.restore();
+      txt(g, 'VS', W / 2, 520, { font: F.cond(700, 60), color: '#999', alpha: clamp(k * 2) });
+      if (t1 > 0) check(g, W / 2 - 420, 380, 60, PAL.green, clamp(t1 / 0.4));
+      if (t2 > 0) { cross(g, W / 2 + 420, 380, 70, PAL.red, clamp(t2 / 0.4)); txt(g, 'not the number of people', W / 2, H - 200, { font: F.serif(52, true, 800), color: PAL.red, alpha: clamp(t2 * 2) }); }
     }
   },
 }));
@@ -386,7 +389,7 @@ S5.push({
     const rib = box(0.6, 0.02, 1.6, std(0xffffff), 0, 0.2, 1.4, w); rib.rotation.y = 0.3;
     return st;
   },
-  update(st, S) { st.wreath.position.set(0, Math.sin(S.t * 0.9) * 0.08, 0); st.wreath.rotation.y = S.t * 0.04; track(st.camera, [[0, [0, 2.2, 5.5], [0, 0.2, 0], 40], [S.dur, [0, 5, 9], [0, 0.2, 0], 40]], S.lt); st.tick(S); },
+  update(st, S) { st.wreath.position.set(0, 0.3 + Math.sin(S.t * 0.9) * 0.08, 0); st.wreath.rotation.y = S.t * 0.04; track(st.camera, [[0, [0, 2.2, 5.5], [0, 0.2, 0], 40], [S.dur, [0, 5, 9], [0, 0.2, 0], 40]], S.lt); st.tick(S); },
   draw(st, g, S) { revealText(g, 'they paid with their lives', S.W / 2, 170, clamp(S.lt / 1.0), { font: F.serif(60), color: '#fff', shadow: 20, style: 'blur' }); revealText(g, 'FOR THE SAFETY OF GENERATIONS TO COME', S.W / 2, 260, clamp((S.lt - S.at(346)) / 0.9), { font: F.cond(600, 50), ls: 6, color: '#ffe2a0', shadow: 20 }); },
 });
 
@@ -397,7 +400,7 @@ S5.push(card(347, '114 YEARS', 'LATER', { def: { out: undefined } }));
 function wreckWorld(E) {
   const st = underwaterWorld({ color: '#03141f', density: 0.0075, hemi: 1.5, bedY: 0, lampI: 260 }, E);
   const fill = new THREE.DirectionalLight(0x6aaad8, 2.2); fill.position.set(100, 200, 120); st.scene.add(fill);
-  const rust = rustMat({ repeat: [14, 2] }), rust2 = rustMat({ base: '#4a2a1a', seed: 4, repeat: [6, 6] });
+  const rust = rustMat({ repeat: [14, 2] }), rust2 = rustMat({ base: '#7a4a30', seed: 4, repeat: [6, 6] });
   const bow = buildLiner({ spec: { ...TITANIC, funnels: [], boats: { fore: [], aft: [] }, masts: [] }, range: [-10, L / 2], detail: 'low' });
   bow.traverse((m) => { if (m.isMesh) m.material = m.material.color && m.material.color.getHex() === 0xf1eee6 ? rust2 : rust; });
   bow.position.set(0, 4, 0); bow.rotation.set(0.02, 0.3, -0.03); st.scene.add(bow);
@@ -422,7 +425,7 @@ function wreckWorld(E) {
 }
 S5.push({
   seg: 348, name: 'wreck today', amb: [{ kind: 'underwater', vol: 1.0 }], trans: 'fade',
-  fx: { bloom: 0.8, bloomThreshold: 0.5, saturation: 1.15, contrast: 1.1, vignette: 0.85 },
+  fx: { exposure: 1.6,  bloom: 0.8, bloomThreshold: 0.5, saturation: 1.15, contrast: 1.1, vignette: 0.85 },
   sfx: (S) => [{ t: 0.3, type: 'sonar', vol: 0.08 }, { t: 4, type: 'sonar', vol: 0.06 }, { t: S.at(350), type: 'hit', vol: 0.25 }, { t: S.at(352), type: 'pop', pitch: 300 }, { t: S.at(354), type: 'drop', vol: 0.2 }],
   build: (E) => wreckWorld(E),
   update(st, S) {
@@ -450,7 +453,7 @@ S5.push({
 // 358 — a memorial; rusticles; Halomonas titanicae; collapse
 S5.push({
   seg: 358, name: 'memorial rusticles', amb: [{ kind: 'underwater', vol: 1.0 }],
-  fx: { bloom: 0.8, bloomThreshold: 0.5, saturation: 1.2, contrast: 1.1, vignette: 0.85 },
+  fx: { exposure: 1.6,  bloom: 0.8, bloomThreshold: 0.5, saturation: 1.2, contrast: 1.1, vignette: 0.85 },
   sfx: (S) => [{ t: 0.3, type: 'bell', freq: 520, n: 1, vol: 0.08, decay: 2 }, { t: S.at(361), type: 'bubbles', n: 20, dur: 2, vol: 0.06 }, { t: S.at(364), type: 'creak', dur: 4, vol: 0.18 }, { t: S.at(366), type: 'boom', vol: 0.3 }],
   build: (E) => wreckWorld(E),
   update(st, S) {
@@ -569,7 +572,7 @@ S5.push({
 // 382 — above the remains of a ship that became a symbol of the same arrogance (finale)
 S5.push({
   seg: 382, name: 'finale', amb: [{ kind: 'underwater', vol: 0.8 }, { kind: 'dark', vol: 0.6 }],
-  fx: { bloom: 0.9, bloomThreshold: 0.5, saturation: 1.1, contrast: 1.1, vignette: 0.9 },
+  fx: { exposure: 1.6,  bloom: 0.9, bloomThreshold: 0.5, saturation: 1.1, contrast: 1.1, vignette: 0.9 },
   sfx: (S) => [{ t: S.find(384, /arrogance/), type: 'boom', vol: 0.45 }, { t: S.find(385, /invulnerability/), type: 'boom', vol: 0.55 }, { t: S.find(385, /invulnerability/) + 0.4, type: 'shimmer', vol: 0.05, notes: [62, 65, 69, 74] }, { t: S.dur - 3, type: 'bell', freq: 440, n: 1, vol: 0.1, decay: 3 }],
   build: (E) => wreckWorld(E),
   update(st, S) {

@@ -173,7 +173,7 @@ S4.push({
   },
   update(st, S) {
     st.berg.position.x = 30 - S.lt * 9; st.berg.rotation.y = S.lt * 0.05;
-    track(st.camera, [[0, [16, -1, 12], [0, -2, 0], 48], [S.dur, [8, -2, 11], [-8, -2, 0], 46]], S.lt, { shake: 0.12 });
+    track(st.camera, [[0, [45, -7, 10], [-10, -2, 4], 50], [S.dur, [38, -7, 10], [-15, -2, 4], 48]], S.lt, { shake: 0.12 });
     st.jets.userData.update(S.lt); st.rivets.userData.update(S.lt);
     st.jets.visible = S.lt > 0.6;
     st.tick(S);
@@ -485,7 +485,7 @@ S4.push({
   sfx: (S) => [{ t: S.at(211) - 1.2, type: 'rocket', vol: 0.2 }, { t: S.at(211) + 1.5, type: 'rocket', vol: 0.18 }, { t: 0.5, type: 'morse', code: '-.-. --.- -..', vol: 0.05 }],
   build(E) {
     const st = sinkingWorld(E, { pivotX: 90 }); st.setSink(-0.045, 3);
-    st.far = []; for (let i = 0; i < 3; i++) { const l = glow(i ? 0xffffff : 0xff4040, 4, 1); l.position.set(-2000 + i * 18, 6 + (i === 2 ? 6 : 0), -3500); st.scene.add(l); st.far.push(l); }
+    st.far = []; for (let i = 0; i < 3; i++) { const l = glow(i ? 0xffffff : 0xff4040, 22, 1); l.material.fog = false; l.position.set(-2000 + i * 18, 6 + (i === 2 ? 6 : 0), 3500); st.scene.add(l); st.far.push(l); }
     st.rocket = particles(90, (i, t) => [0, -100, 0], { size: 2.4, color: 0xffffff, opacity: 1 }); st.scene.add(st.rocket);
     return st;
   },
@@ -493,7 +493,7 @@ S4.push({
     const a211 = S.at(211);
     const by = st.ship.userData.boatDeckY;
     const w = new THREE.Vector3(20, by + 1.7, 12.5); st.ship.localToWorld(w);
-    if (S.lt < a211 - 1.4) track(st.camera, [[0, [w.x, w.y, w.z], [w.x - 1500, w.y - 2, -3500], 30], [a211 - 1.4, [w.x, w.y, w.z], [w.x - 1600, w.y - 3, -3500], 24]], S.lt);
+    if (S.lt < a211 - 1.4) track(st.camera, [[0, [w.x, w.y, w.z], [-1700, 40, 3500], 30], [a211 - 1.4, [w.x, w.y, w.z], [-1900, 20, 3500], 22]], S.lt);
     else track(st.camera, [[a211 - 1.4, [w.x + 220, 25, 320], [w.x - 40, 60, 0], 40], [S.dur, [w.x + 240, 30, 340], [w.x - 40, 90, 0], 42]], S.lt);
     // rockets
     const launches = [a211 - 1.2, a211 + 1.5];
@@ -514,7 +514,7 @@ S4.push({
   },
   draw(st, g, S) {
     const { W, H, lt } = S;
-    if (lt < S.at(211) - 1.4) { const p = toScreen(st.far[0].position, st.camera); callout(g, p[0] - 200, p[1] - 200, p[0], p[1], 'ANOTHER SHIP?', 'lights on the horizon', clamp((lt - 0.5) / 0.8), { align: 'right' }); }
+    if (lt < S.at(211) - 1.4) { const p = toScreen(st.far[0].position, st.camera); callout(g, p[0] - 120, p[1] - 220, p[0], p[1], 'ANOTHER SHIP?', 'lights on the horizon', clamp((lt - 0.5) / 0.8), { align: 'right' }); }
     const n = lt - S.at(210);
     if (n > 0 && lt < S.at(211) - 1.4) txt(g, 'NO REPLY', W / 2, H - 260, { font: F.cond(700, 80), ls: 14, color: PAL.red2, alpha: clamp(n * 3), shadow: 20 });
     const r = lt - S.at(211) + 1.4;
@@ -622,9 +622,12 @@ S4.push({
     const w = new THREE.Vector3(10.25, st.ship.userData.boatDeckY + 0.4, 12.1); st.ship.localToWorld(w);
     if (S.lt < a230) { pose.reach(st.isidor, 'R', 0.8); st.coat.visible = true; pose.reach(st.ida, 'R', clamp((S.lt - S.at(229) - 1) / 0.5)); }
     else { st.coat.visible = false; pose.hug(st.isidor, 1); pose.hug(st.ida, 1); st.isidor.rotation.y = 1.4; st.ida.rotation.y = -1.6; st.ida.position.x = 10.45; }
-    if (S.lt < a230) track(st.camera, [[0, [w.x + 3.2, w.y + 1.7, w.z - 2.6], [w.x + 0.5, w.y + 1.2, w.z], 40], [a230, [w.x + 2.6, w.y + 1.6, w.z - 2.2], [w.x + 0.4, w.y + 1.3, w.z], 36]], S.lt);
-    else if (S.lt < a232) track(st.camera, [[a230, [w.x + 1.6, w.y + 1.4, w.z - 1.6], [w.x, w.y + 1.3, w.z], 34], [a232, [w.x + 1.3, w.y + 1.4, w.z - 1.3], [w.x, w.y + 1.35, w.z], 30]], S.lt);
-    else track(st.camera, [[a232, [w.x + 5, w.y + 2.6, w.z - 5], [w.x, w.y + 1, w.z], 40], [S.dur, [w.x + 7, w.y + 3.5, w.z - 6], [w.x, w.y + 1, w.z], 42]], S.lt);
+    const by = st.ship.userData.boatDeckY - 1.2;
+    const L = (x, y, z) => { const v = new THREE.Vector3(x, by + y, z); st.ship.localToWorld(v); return [v.x, v.y, v.z]; };
+    if (S.lt < a230) track(st.camera, [[0, L(14.2, 1.7, 9.2), L(10.6, 1.25, 12.0), 42], [a230, L(13.4, 1.65, 9.6), L(10.5, 1.3, 12.0), 38]], S.lt);
+    else if (S.lt < a232) track(st.camera, [[a230, L(11.9, 1.6, 10.0), L(10.3, 1.55, 12.1), 36], [a232, L(11.6, 1.6, 10.3), L(10.3, 1.6, 12.1), 32]], S.lt);
+    else track(st.camera, [[a232, L(16, 2.4, 8.4), L(10.3, 1.0, 12.1), 42], [S.dur, L(19, 3.4, 8.2), L(10.3, 1.0, 12.1), 44]], S.lt);
+    void w;
     pose.idle(st.maid, S.t);
     st.tick(S);
   },
@@ -838,7 +841,7 @@ S4.push({
     for (let i = 0; i < 260; i++) { const base = -L / 2 + 10 + r() * 100; const fall = Math.max(0, (S.lt - S.at(260)) * 0.8 - r() * 4); pts[i * 3] = base + fall * fall * 3; pts[i * 3 + 1] = 13 + r() * 6 - (i % 7 === 0 ? fall * fall * 2 : 0); r(); }
     st.people.geometry.attributes.position.needsUpdate = true;
     const a258 = S.at(258);
-    if (S.lt < a258) track(st.camera, [[0, [-60, 6, 300], [-40, 40, 0], 40], [a258, [-80, 5, 280], [-60, 55, 0], 38]], S.lt);
+    if (S.lt < a258) track(st.camera, [[0, [-30, 6, 220], [-40, 35, 0], 40], [a258, [-60, 5, 200], [-60, 45, 0], 38]], S.lt);
     else if (S.lt < S.at(262)) track(st.camera, [[a258, [-110, 3, 110], [-122, 38, 0], 48], [S.at(262), [-115, 3, 100], [-125, 44, 0], 46]], S.lt);
     else track(st.camera, [[S.at(262), [60, 10, 300], [-40, 30, 0], 40], [S.dur, [50, 10, 280], [-40, 30, 0], 38]], S.lt);
     S.fx.exposure = 1;

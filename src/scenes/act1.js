@@ -442,17 +442,17 @@ S1.push({
 
 // 17b..19 — the dinner: Pirrie & Ismay
 function diningRoom(E) {
-  const st = roomWorld({ w: 12, d: 9, h: 4.6, wall: '#6a1018', wallAccent: '#e0b050', floor: 'carpet', floorColor: '#3a0c10', floorAccent: '#c9a14a', keyPos: [0, 4.4, 1], keyI: 40, hemi: 0.35 }, E);
+  const st = roomWorld({ w: 12, d: 9, h: 4.6, wall: '#6a1018', wallAccent: '#e0b050', floor: 'carpet', floorColor: '#3a0c10', floorAccent: '#c9a14a', keyPos: [3, 4.4, 3], keyI: 16, hemi: 0.35 }, E);
   const { scene } = st;
   chandelier(scene, 0, 3.6, 0.2, 1.2, { intensity: 14, dist: 12 });
-  table(scene, 0, 0.2, { w: 3.0, d: 1.3, seats: 6, cloth: 0xf3ece0, candle: false });
+  table(scene, 0, 0.2, { w: 3.0, d: 1.3, seats: 6, cloth: 0xb8ae9c, candle: false });
   for (const x of [-2.2, 2.2]) { cyl(0.05, 0.12, 1.1, std(0xc9a14a, { metal: 0.8, rough: 0.3 }), x, 0.55, -3.8, scene, 10); const fl = glow(0xffb060, 0.35); fl.position.set(x, 1.2, -3.8); scene.add(fl); }
   painting(scene, -3, 2.5, -4.45, 2.4, 1.6, landscape('#3a5a8a', '#e0a060', '#1a3a5a'));
   painting(scene, 3, 2.5, -4.45, 1.6, 2.0, landscape('#2a2a3a', '#a07050', '#2a3a3a'));
   // fireplace
   const marble = std(0xe8e0d0, { rough: 0.3 });
   box(2.6, 1.6, 0.6, marble, 5.7, 0.8, 0, scene).rotation.y = Math.PI / 2;
-  const fire = glow(0xff7a20, 1.6, 1); fire.position.set(5.5, 0.5, 0); scene.add(fire);
+  const fire = glow(0xff7a20, 0.9, 0.8); fire.position.set(5.5, 0.5, 0); scene.add(fire);
   const fireL = new THREE.PointLight(0xff8030, 10, 8, 1.5); fireL.position.set(5.2, 0.6, 0); scene.add(fireL);
   // brandy glasses + decanter
   const glass = std(0xe8f4ff, { rough: 0.05, transparent: true, opacity: 0.35 }); const brandy = std(0xa0501a, { rough: 0.1, emissive: 0x401505, ei: 0.5, transparent: true, opacity: 0.9 });
@@ -482,7 +482,7 @@ S1.push({
     const talk = (p, on) => { p.userData.head.rotation.x = on ? Math.sin(S.t * 7) * 0.04 : 0; p.userData.armR.rotation.x = -0.7 + (on ? Math.sin(S.t * 2) * 0.2 : 0); p.userData.armR.userData.fore.rotation.x = -0.8; };
     talk(st.pirrie, S.lt > a18 && S.lt < a19); talk(st.ismay, S.lt > a19);
     st.smoke.userData.update(S.t);
-    st.fire.scale.setScalar(1.5 + Math.sin(S.t * 13) * 0.15 + Math.sin(S.t * 7.7) * 0.1); st.fireL.intensity = 10 + Math.sin(S.t * 11) * 2;
+    st.fire.scale.setScalar(0.9 + Math.sin(S.t * 13) * 0.1 + Math.sin(S.t * 7.7) * 0.06); st.fireL.intensity = 10 + Math.sin(S.t * 11) * 2;
   },
   draw(st, g, S) {
     nameTag(g, 110, S.H - 300, 'LORD WILLIAM PIRRIE', 'CHAIRMAN · HARLAND & WOLFF SHIPYARD', clamp((S.lt - S.at(18) - 0.3) / 0.8) * (S.lt < S.at(19) ? 1 : 0));
@@ -561,7 +561,7 @@ S1.push({
   update(st, S) {
     track(st.camera, [[0, [0.7, 1.9, 1.5], [0, 0.8, 0.2], 36], [S.dur, [0.1, 1.75, 0.95], [0, 0.8, 0.15], 32]], S.lt);
     st.smoke.userData.update(S.t);
-    st.fire.scale.setScalar(1.5 + Math.sin(S.t * 13) * 0.15);
+    st.fire.scale.setScalar(0.9 + Math.sin(S.t * 13) * 0.1);
   },
   draw(st, g, S) {
     const k = S.lt - S.find(23, /Olympic/);
